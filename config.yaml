@@ -9,3 +9,7 @@ books:
 slideshow:
   interval: 600 # interval between slides in s
   mode: "rand" # rand, asc (date), desc (date)
+display:
+  com: "spi" # spi (e-ink), hdmi (every other monitor)
+  height: 800 # pixels
+  width: 480 # pixels
