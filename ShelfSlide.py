@@ -3,7 +3,8 @@ import yaml
 import json
 import requests
 
-
+##
+# @brief Download a cover image from a URL
 def download_covers(url, path):
     try:
         response = requests.get(url)
@@ -16,6 +17,9 @@ def download_covers(url, path):
     except requests.exceptions.RequestException as e:
         print(f"Failed to download image: {e}")
 
+
+##
+# @brief Generate a cover filename from the author and title
 def generate_coverfilename(author, title):
     author = author.replace(" ", "-").lower()
     title = title.replace(" ", "-").lower()
