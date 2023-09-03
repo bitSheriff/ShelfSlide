@@ -8,4 +8,4 @@ books:
   git: false # if true, books.json will be fetched from a git repository
 slideshow:
   interval: 600 # interval between slides in s
-
+  mode: "rand" # rand, asc (date), desc (date)
