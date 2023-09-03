@@ -1,0 +1,6 @@
+books:
+  dir: "./books" # directory where books.json is stored
+  git: false # if true, books.json will be fetched from a git repository
+slideshow:
+  interval: 600 # interval between slides in s
+
