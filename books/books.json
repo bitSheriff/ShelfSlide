@@ -1,0 +1,20 @@
+{
+  "read": [
+    {
+      "title": "The Book",
+      "author": "John Doe",
+      "cover": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Contact-new.svg/1920px-Contact-new.svg.png",
+        "urlType": "link"
+      }
+    },
+    {
+      "title": "The Magazine",
+      "author": "Jane Doe",
+      "cover": {
+        "url": "jane-doe_the-magazine.jpeg",
+        "urlType": "local"
+      }
+    }
+  ]
+}
