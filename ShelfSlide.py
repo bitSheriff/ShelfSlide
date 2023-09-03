@@ -21,7 +21,6 @@ def download_covers(url, path):
     except requests.exceptions.RequestException as e:
         print(f"Failed to download image: {e}")
 
-
 ##
 # @brief Generate a cover filename from the author and title
 def generate_coverfilename(author, title):
@@ -29,7 +28,8 @@ def generate_coverfilename(author, title):
     title = title.replace(" ", "-").lower()
     return f"{author}_{title}.jpg"
 
-
+##
+# @brief Sort the book list according to the preferred mode
 def sort_books(books, mode):
     if mode == "desc":
         return books.sort(key=lambda x: x.date, reverse=True)
@@ -74,6 +74,8 @@ if __name__ == "__main__":
 
     books_dir = str(str(config_file['books']['dir']) + "/books.json")
     cover_dir = str(str(config_file['books']['dir']) + "/media")
+
+    update_bookLibrary(config_file['books']['dir'], config_file['books']['git'])
 
     with open(books_dir,'r') as file:
         books_file = json.load(file)
