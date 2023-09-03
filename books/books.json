@@ -6,7 +6,8 @@
       "cover": {
         "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Contact-new.svg/1920px-Contact-new.svg.png",
         "urlType": "link"
-      }
+      },
+      "date": "2021-01-01"
     },
     {
       "title": "The Magazine",
@@ -14,7 +15,8 @@
       "cover": {
         "url": "jane-doe_the-magazine.jpeg",
         "urlType": "local"
-      }
+      },
+      "date": "2020-01-02"
     }
   ]
 }
