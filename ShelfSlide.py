@@ -4,7 +4,7 @@ import json
 import requests
 import sys
 import random
-
+import subprocess
 
 ## own modules
 sys.path.append("..")
@@ -41,6 +41,8 @@ def sort_books(books, mode):
         # do nothing
         return books
 
+##
+# @brief Load the book library from a json file
 def load_bookLibrary(file, cover_dir):
     list = []
     for entry in file['read']:
@@ -53,6 +55,16 @@ def load_bookLibrary(file, cover_dir):
                 bk.set_cover(cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
         list.append(bk)
     return list
+
+##
+# @brief Update the book library from a git repository
+def update_bookLibrary(book_dir, is_git):
+    if is_git:
+        original_directory = os.getcwd()
+        os.chdir(book_dir)
+        subprocess.run(["git", "pull"])
+        os.chdir(original_directory) # change back to original directory
+
 
 ##
 # @brief Main function
