@@ -51,7 +51,14 @@ Follow these simple steps to set up your ShelfSlide digital bookshelf:
    cd ShelfSlide
    ```
 
-3. Install the required Python packages:
+3. Create virtual environment and active it:
+
+   ```shell
+   python3 -m venv venv
+   sourve venv/bin/activate
+   ```
+
+4. Install the required Python packages:
 
    ```shell
    pip install -r requirements.txt

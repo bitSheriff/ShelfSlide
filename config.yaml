@@ -14,3 +14,4 @@ display:
   height: 800 # pixels
   width: 480 # pixels
   color: "BW" # BW, RBW, RYBW,7col
+  type: "epd7in5"

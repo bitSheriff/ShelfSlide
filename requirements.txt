@@ -1,2 +1,10 @@
+certifi==2023.7.22
+charset-normalizer==3.2.0
+idna==3.4
+Pillow==10.0.0
 PyYAML==6.0.1
-Requests==2.31.0
+requests==2.31.0
+RPi.GPIO==0.7.1
+spidev==3.6
+urllib3==2.0.4
+waveshare-epaper==1.2.0
