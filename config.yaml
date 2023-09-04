@@ -13,3 +13,4 @@ display:
   com: "spi" # spi (e-ink), hdmi (every other monitor)
   height: 800 # pixels
   width: 480 # pixels
+  color: "BW" # BW, RBW, RYBW,7col
