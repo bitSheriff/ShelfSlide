@@ -9,10 +9,12 @@ ShelfSlide is an open-source project that turns your Raspberry Pi and E-Ink disp
 
 ## Idea
 
+I am hugh bookworm and love to read on my eReaders. The one thing I miss is the kind of private library which builds up year after year. The book covers are a great way to remember the books you've read and to show them to others. So I thought why not build a digital bookshelf which can be used to display the book covers of my eBooks.
+
 ### Isn't there such a thing?
 
 Well, yes and no.
-There is a very awesome project called [Openframe](https://openframe.io/)
+There is a very awesome project called [Openframe](https://openframe.io/), which can be used to show digital art on a screen. Unfortunately the do not support e-Ink devices (yet).
 
 ## Features
 
@@ -56,6 +58,27 @@ Follow these simple steps to set up your ShelfSlide digital bookshelf:
 ### Configuration
 
 The configuration is done with the file `config.yaml`.
+
+`books.dir`
+Directory where the `books.json` file is located.
+
+`books.git`
+If set to `true` the `books.json` file and `media/`will be pulled from the git repository.
+
+`slideshow.interval`
+Interval in seconds between the covers.
+
+`slideshow.mode`
+Mode of the slideshow. Can be `random`, `asc` or `desc` which stands for random, ascending or descending order (decided on the date the book was read).
+
+`display.com`
+Communication interface of the display. Can be `spi` or `hdmi`. Many EPD (electronic paper display -> e-Ink) displays are connected via SPI, but some are connected via HDMI.
+
+`display.height`
+Height of the display in pixels.
+
+`display.width`
+Width of the display in pixels.
 
 ### Usage
 
