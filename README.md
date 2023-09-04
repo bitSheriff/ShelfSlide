@@ -5,6 +5,8 @@
      width="300"
 />
 
+> :warning: **This project is still in development and not ready for production use.**
+
 ShelfSlide is an open-source project that turns your Raspberry Pi and E-Ink display into a stylish digital bookshelf. It allows you to showcase the book covers of your favorite eBooks that you've read or want to show off. ShelfSlide is designed to be simple to set up and highly customizable, allowing you to personalize your digital bookshelf with ease.
 
 ## Idea
