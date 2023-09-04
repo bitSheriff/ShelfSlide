@@ -9,6 +9,7 @@ import subprocess
 ## own modules
 sys.path.append("..")
 import src.book as book
+import src.display as display
 
 ##
 # @brief Download a cover image from a URL
@@ -65,12 +66,11 @@ def update_bookLibrary(book_dir, is_git):
         subprocess.run(["git", "pull"])
         os.chdir(original_directory) # change back to original directory
 
-
 ##
 # @brief Main function
-if __name__ == "__main__":
+def main():
     with open('config.yaml', 'r') as file:
-        config_file = yaml.safe_load(file)
+            config_file = yaml.safe_load(file)
 
     books_dir = str(str(config_file['books']['dir']) + "/books.json")
     cover_dir = str(str(config_file['books']['dir']) + "/media")
@@ -85,3 +85,10 @@ if __name__ == "__main__":
     print(*book_list)
     bk = sort_books(book_list, config_file['slideshow']['mode'])
     print(*book_list)
+
+
+
+##
+# @brief Main function
+if __name__ == "__main__":
+    main()
