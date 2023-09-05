@@ -2,7 +2,7 @@
 import os
 import sys
 from PIL import Image
-import epaper
+from epaper import *
 
 class display:
 
