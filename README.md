@@ -39,26 +39,33 @@ Follow these simple steps to set up your ShelfSlide digital bookshelf:
 
 ### Installation
 
-1. Clone the ShelfSlide repository to your Raspberry Pi:
+1. Install the required packages on the Raspberry Pi:
+
+   ```shell
+   sudo apt-get install python3-pip
+   sudo apt-get install libopenjp2-7
+   ```
+
+2. Clone the ShelfSlide repository to your Raspberry Pi:
 
    ```shell
    git clone https://github.com/bitSheriff/ShelfSlide.git
    ```
 
-2. Navigate to the project directory:
+3. Navigate to the project directory:
 
    ```shell
    cd ShelfSlide
    ```
 
-3. Create virtual environment and active it:
+4. Create virtual environment and active it:
 
    ```shell
    python3 -m venv venv
    sourve venv/bin/activate
    ```
 
-4. Install the required Python packages:
+5. Install the required Python packages:
 
    ```shell
    pip install -r requirements.txt
