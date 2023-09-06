@@ -5,41 +5,48 @@ from PIL import Image
 import epaper
 import logging
 
+KNOWN_EPD = ["epd7in5_V2"]
 
 class display:
 
     __colors = "BW"
-    __type = ""
-    __height = 0
-    __width = 0
+    __type = "epd7in5_V2"
+    __height = 480
+    __width = 800
     __epd = None
+    __rot = 90
 
     # image to display, store it here to avoid reloading it
     __image = None
 
-    def __initEPD(self, type):
+    def __initEPD(self):
 
         self.__epd = epaper.epaper('epd7in5_V2').EPD()
         self.__epd.init()
         self.__epd.Clear()
 
-    def __init__(self, type) -> None:
+    def __init__(self, type, rot_inv) -> None:
         self.__type = type
 
         # init the e-paper display
-        self.__initEPD(type)
+        self.__initEPD()
+
+        # rotate the cover in the opposite direction
+        if rot_inv:
+            self.__rot = -90
+
         pass
 
     def __resize_image(self, image):
-        image = image.rotate(90, expand=True)
-        canvas = Image.new("RGB", (800, 480), "white")
+        image = image.rotate(self.__rot, expand=True)
+        canvas = Image.new("RGB", (self.__width, self.__height), "white")
 
-        pic_scale = max( (image.width / 800), (image.height / 480) )
+        pic_scale = max( (image.width / self.__width), (image.height / self.__height) )
 
         image = image.resize( (int(image.width//pic_scale), int(image.height//pic_scale)) )
 
-        x_offset = (800 - image.width) // 2
-        y_offset = (480 - image.height) // 2
+        x_offset = (self.__width - image.width) // 2
+        y_offset = (self.__height - image.height) // 2
         canvas.paste(image, (x_offset, y_offset))
 
         return canvas
@@ -52,7 +59,7 @@ class display:
 
         # convert the image to the correct colors
         if self.__colors == "BW":
-            self.__image = self.__image.convert(mode="L", dither=Image.FLOYDSTEINBERG)    # TODO "L" or "1", needs to be checked on hardware
+            self.__image = self.__image.convert(mode="L")
 
         self.__image = self.__resize_image(self.__image)
 

@@ -39,16 +39,16 @@ def generate_coverfilename(author, title):
 # @brief Sort the book list according to the preferred mode
 def sort_books(books, mode):
     if mode == "desc":
-        return books.sort(key=lambda x: x.date, reverse=True)
+        books.sort(key=lambda x: x.date, reverse=True)
     elif mode == "asc":
-        return books.sort(key=lambda x: x.date, reverse=False)
+        books.sort(key=lambda x: x.date, reverse=False)
     elif mode == "rand":
         random.shuffle(books)
-        newBk = books
-        return newBk
     else:
         # do nothing
         return books
+    newBk = books
+    return newBk
 
 ##
 # @brief Load the book library from a json file
@@ -85,7 +85,7 @@ def main():
     books_dir = str(str(config_file['books']['dir']) + "/books.json")
     cover_dir = str(str(config_file['books']['dir']) + "/media")
 
-    display = Display.display("epd7in5")
+    display = Display.display("epd7in5", config_file['display']['rot_inv'])
 
     update_bookLibrary(config_file['books']['dir'], config_file['books']['git'])
 
