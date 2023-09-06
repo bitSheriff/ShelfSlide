@@ -85,7 +85,7 @@ def main():
     books_dir = str(str(config_file['books']['dir']) + "/books.json")
     cover_dir = str(str(config_file['books']['dir']) + "/media")
 
-    display = Display.display("epd7in5", config_file['display']['rot_inv'])
+    display = Display.display(config_file['display']['type'], config_file['display']['rot_inv'])
 
     update_bookLibrary(config_file['books']['dir'], config_file['books']['git'])
 

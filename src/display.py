@@ -5,7 +5,7 @@ from PIL import Image
 import epaper
 import logging
 
-KNOWN_EPD = ["epd7in5_V2"]
+KNOWN_EPDs = ["epd7in5_V2"]
 
 class display:
 
@@ -21,7 +21,10 @@ class display:
 
     def __initEPD(self):
 
-        self.__epd = epaper.epaper('epd7in5_V2').EPD()
+        if not self.__type in KNOWN_EPDs:
+            raise NotImplementedError("NOT SUPPORTED EPD")
+
+        self.__epd = epaper.epaper(self.__type).EPD()
         self.__epd.init()
         self.__epd.Clear()
 
