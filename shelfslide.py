@@ -39,7 +39,9 @@ def sort_books(books, mode):
     elif mode == "asc":
         return books.sort(key=lambda x: x.date, reverse=False)
     elif mode == "rand":
-        return random.shuffle(books)
+        random.shuffle(books)
+        newBk = books
+        return newBk
     else:
         # do nothing
         return books
@@ -50,7 +52,7 @@ def load_bookLibrary(file, cover_dir):
     list = []
     for entry in file['read']:
         cover = entry['cover']
-        bk = book.Book(entry['title'], entry['author'], entry['cover'], entry['date'])
+        bk = book.Book(entry['title'], entry['author'], cover_dir+"/"+cover['url'], entry['date'])
 
         # if the book has an online cover, download it, the path needs to be updated
         if cover['urlType'] == "link":
@@ -88,12 +90,10 @@ def main():
 
     book_list = load_bookLibrary(books_file, cover_dir)
 
-    print(*book_list) # todo remove
-    bk = sort_books(book_list, config_file['slideshow']['mode'])
-    print(*book_list) # todo remove
+    book_list = sort_books(book_list, config_file['slideshow']['mode'])
 
-    display.display_image("books/media/jane-doe_the-magazine.jpeg")
 
+    display.display_image(book_list[0].get_cover())
 
 ##
 # @brief Main function
