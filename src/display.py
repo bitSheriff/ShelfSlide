@@ -3,6 +3,10 @@ import os
 import sys
 from PIL import Image
 import epaper
+import src.epdDriver as epdDriver
+import logging
+
+USE_OWN_DRIVER = 0
 
 class display:
 
@@ -16,7 +20,12 @@ class display:
     __image = None
 
     def __initEPD(self, type):
-        self.__epd = epaper.epaper('epd7in5').EPD()
+
+        if USE_OWN_DRIVER:
+            self.__epd = epdDriver.EPD()
+        else:
+            self.__epd = epaper.epaper('epd7in5').EPD()
+
         self.__epd.init()
         self.__epd.Clear()
 
@@ -36,7 +45,6 @@ class display:
         image = image.resize(new_size)
 
         image.save("test.jpg")
-        print(image.size)
 
         return image
 
@@ -44,20 +52,22 @@ class display:
 
     def display_image(self, path) -> None:
         # open the image
-        print(path)
+        logging.debug(f"given image: {path}")
         self.__image = Image.open(path)
 
-        # convert the image to the correct colors
-        if self.__colors == "BW":
-            self.__image = self.__image.convert(mode="L", dither=Image.FLOYDSTEINBERG)    # TODO "L" or "1", needs to be checked on hardware
+        if not USE_OWN_DRIVER:
+            # convert the image to the correct colors
+            if self.__colors == "BW":
+               self.__image = self.__image.convert(mode="L", dither=Image.FLOYDSTEINBERG)    # TODO "L" or "1", needs to be checked on hardware
+
 
         self.__image = self.__resize_image(self.__image)
 
-        self.__epd.display(self.__epd.getbuffer(self.__image))
-        print("display done")
-
-        self.__epd.sleep()
-        print("sleep done")
+        if USE_OWN_DRIVER:
+            self.__epd.display_frame(self.__epd.get_frame_buffer(self.__image))
+        else:
+            self.__epd.display(self.__epd.getbuffer(self.__image))
+            self.__epd.sleep()
 
         pass
 

@@ -22,7 +22,7 @@ def download_covers(url, path):
         with open(path, 'wb') as file:
             file.write(response.content)
     except requests.exceptions.RequestException as e:
-        print(f"Failed to download image: {e}")
+        logging.error(f"Failed to download image: {e}")
 
 ##
 # @brief Generate a cover filename from the author and title
@@ -88,9 +88,9 @@ def main():
 
     book_list = load_bookLibrary(books_file, cover_dir)
 
-    print(*book_list)
+    print(*book_list) # todo remove
     bk = sort_books(book_list, config_file['slideshow']['mode'])
-    print(*book_list)
+    print(*book_list) # todo remove
 
     display.display_image("books/media/jane-doe_the-magazine.jpeg")
 
