@@ -46,8 +46,8 @@ class display:
 
 
     def display_image(self, path) -> None:
+        
         # open the image
-        logging.debug(f"given image: {path}")
         self.__image = Image.open(path)
 
         # convert the image to the correct colors
@@ -60,6 +60,10 @@ class display:
         self.__epd.sleep()
 
         pass
+
+    def display_wakeUp(self) -> None:
+            self.__epd.init()
+            self.__epd.Clear()
 
     def refresh(self):
         if self.__image == None:
