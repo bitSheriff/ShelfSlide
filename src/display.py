@@ -20,11 +20,8 @@ class display:
     def __initEPD(self, type):
 
         self.__epd = epaper.epaper('epd7in5_V2').EPD()
-
         self.__epd.init()
-
-        if not USE_OWN_DRIVER:
-            self.__epd.Clear()
+        self.__epd.Clear()
 
     def __init__(self, type) -> None:
         self.__type = type
@@ -35,16 +32,27 @@ class display:
 
     def __resize_image(self, image):
         image = image.rotate(90)
-        new_size = (800, 480)
+        canvas = Image.new("RGB", (800, 480), "white")
 
-        image.thumbnail(new_size)  # Use Image.ANTIALIAS for high-quality resizing
+        pic_scale = max( (image.height / 800), (image.width / 480) )
+        print(f"scale: {pic_scale}")
 
-        image = image.resize(new_size)
+        image = image.resize( (int(image.width//pic_scale), int(image.height//pic_scale)) )
 
-        image.save("test.jpg")
+        print(f"resized image w={image.width} h={image.height}")
+        image.save("test1.jpg")
 
+
+        x_offset = (800 - image.width) // 2
+        y_offset = (480 - image.height) // 2
+        canvas.paste(image, (x_offset, y_offset))
+        image = canvas
+
+
+        print(f"canvas w={image.width} h={image.height}")
+
+        image.save("test2.jpg")
         return image
-
 
 
     def display_image(self, path) -> None:
