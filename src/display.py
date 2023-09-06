@@ -32,28 +32,17 @@ class display:
 
     def __resize_image(self, image):
         image = image.rotate(90, expand=True)
-        print(f"original image w={image.width} h={image.height}")
         canvas = Image.new("RGB", (800, 480), "white")
 
         pic_scale = max( (image.width / 800), (image.height / 480) )
-        print(f"scale: {pic_scale}")
 
         image = image.resize( (int(image.width//pic_scale), int(image.height//pic_scale)) )
-
-        print(f"resized image w={image.width} h={image.height}")
-        image.save("test1.jpg")
-
 
         x_offset = (800 - image.width) // 2
         y_offset = (480 - image.height) // 2
         canvas.paste(image, (x_offset, y_offset))
-        image = canvas
 
-
-        print(f"canvas w={image.width} h={image.height}")
-
-        image.save("test2.jpg")
-        return image
+        return canvas
 
 
     def display_image(self, path) -> None:
