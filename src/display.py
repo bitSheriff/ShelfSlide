@@ -32,17 +32,18 @@ class display:
         self.__epd.Clear()
 
     def __init__(self, type, w, h, c, rot_inv) -> None:
+        # init the private variables
         self.__type = type
         self.__width = w
         self.__height = h
         self.__colors = c
+
         # init the e-paper display
         self.__initEPD()
 
         # rotate the cover in the opposite direction
         if rot_inv:
             self.__rot = -90
-
         pass
 
     def __resize_image(self, image):
@@ -71,9 +72,9 @@ class display:
 
         self.__image = self.__resize_image(self.__image)
 
+        # send the image and set the device sleeping
         self.__epd.display(self.__epd.getbuffer(self.__image))
         self.__epd.sleep()
-
         pass
 
     def display_wakeUp(self) -> None:

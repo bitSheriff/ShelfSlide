@@ -66,39 +66,40 @@ def load_bookLibrary(file, cover_dir):
 
 ##
 # @brief Update the book library from a git repository
-def update_bookLibrary(book_dir, is_git):
+def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode):
     if is_git:
         original_directory = os.getcwd()
         os.chdir(book_dir)
         subprocess.run(["git", "pull"])
         os.chdir(original_directory) # change back to original directory
+    with open(book_dir+"/books.json",'r') as file:
+        books_file = json.load(file)
+
+    book_list = load_bookLibrary(books_file, cover_dir)
+    book_list = sort_books(book_list, slide_mode)
+    return book_list
 
 ##
 # @brief Main function
 def main():
-    
+
     logging.basicConfig(level=logging.DEBUG)
 
     with open('config.yaml', 'r') as file:
             config_file = yaml.safe_load(file)
 
-    books_dir = str(str(config_file['books']['dir']) + "/books.json")
-    cover_dir = str(str(config_file['books']['dir']) + "/media")
-
+    # configure the display
     display = Display.display(  config_file['display']['type'],
                                 config_file['display']['width'],
                                 config_file['display']['height'],
                                 config_file['display']['colors'],
                                 config_file['display']['rot_inv'])
 
-    update_bookLibrary(config_file['books']['dir'], config_file['books']['git'])
-
-    with open(books_dir,'r') as file:
-        books_file = json.load(file)
-
-    book_list = load_bookLibrary(books_file, cover_dir)
-
-    book_list = sort_books(book_list, config_file['slideshow']['mode'])
+    # get the books
+    book_list = update_bookLibrary( config_file['books']['dir'],
+                                    str(str(config_file['books']['dir']) + "/media"),
+                                    config_file['books']['git'],
+                                    config_file['slideshow']['mode'])
 
     slideshow_sleep = min( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
 
