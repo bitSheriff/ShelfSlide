@@ -31,10 +31,11 @@ class display:
         pass
 
     def __resize_image(self, image):
-        image = image.rotate(90)
+        image = image.rotate(90, expand=True)
+        print(f"original image w={image.width} h={image.height}")
         canvas = Image.new("RGB", (800, 480), "white")
 
-        pic_scale = max( (image.height / 800), (image.width / 480) )
+        pic_scale = max( (image.width / 800), (image.height / 480) )
         print(f"scale: {pic_scale}")
 
         image = image.resize( (int(image.width//pic_scale), int(image.height//pic_scale)) )
