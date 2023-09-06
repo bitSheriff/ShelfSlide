@@ -27,6 +27,11 @@ There is a very awesome project called [Openframe](https://openframe.io/), which
 - Minimal power consumption thanks to E-Ink technology.
 - Perfect for creating a digital library or showcasing your literary collection.
 
+> :warning: **Copyright Infringement Risk** Important Notice for Users :warning:
+> 
+> Using the online functions provided in this software that allow you to download content from external links may pose a significant risk of copyright infringement. It is essential to be aware of and respect copyright laws and regulations before utilizing this feature.
+> <underline> Please check the right before using this feature.</underline>
+
 ## Getting Started
 
 Follow these simple steps to set up your ShelfSlide digital bookshelf:
