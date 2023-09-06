@@ -7,11 +7,15 @@ import random
 import subprocess
 import RPi.GPIO as GPIO
 import logging
+import time
 
 ## own modules
 sys.path.append("..")
 import src.book as book
 import src.display as Display
+
+
+SLIDESHOW_MIN_SLEEP = 300 # min 5min sleep
 
 ##
 # @brief Download a cover image from a URL
@@ -92,8 +96,14 @@ def main():
 
     book_list = sort_books(book_list, config_file['slideshow']['mode'])
 
+    slideshow_sleep = min( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
 
-    display.display_image(book_list[0].get_cover())
+    while True:
+        i = 0
+        for i in range(len(book_list)):
+            display.display_image(book_list[i].get_cover())
+            time.sleep(slideshow_sleep)
+            display.display_wakeUp()
 
 ##
 # @brief Main function
