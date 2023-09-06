@@ -5,7 +5,6 @@ import requests
 import sys
 import random
 import subprocess
-import RPi.GPIO as GPIO
 import logging
 import time
 
@@ -77,15 +76,20 @@ def update_bookLibrary(book_dir, is_git):
 ##
 # @brief Main function
 def main():
-    GPIO.setmode(GPIO.BCM)
+    
     logging.basicConfig(level=logging.DEBUG)
+
     with open('config.yaml', 'r') as file:
             config_file = yaml.safe_load(file)
 
     books_dir = str(str(config_file['books']['dir']) + "/books.json")
     cover_dir = str(str(config_file['books']['dir']) + "/media")
 
-    display = Display.display(config_file['display']['type'], config_file['display']['rot_inv'])
+    display = Display.display(  config_file['display']['type'],
+                                config_file['display']['width'],
+                                config_file['display']['height'],
+                                config_file['display']['colors'],
+                                config_file['display']['rot_inv'])
 
     update_bookLibrary(config_file['books']['dir'], config_file['books']['git'])
 

@@ -11,8 +11,8 @@ slideshow:
   mode: "asc" # rand, asc (date), desc (date)
 display:
   com: "spi" # spi (e-ink), hdmi (every other monitor)
-  height: 800 # pixels
-  width: 480 # pixels
-  color: "BW" # BW, RBW, RYBW,7col
+  width: 800 # pixels
+  height: 480 # pixels
+  colors: "BW" # BW, RBW, RYBW,7col
   type: "epd7in5_V2"
   rot_inv: false

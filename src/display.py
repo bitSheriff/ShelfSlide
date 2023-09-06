@@ -4,6 +4,7 @@ import sys
 from PIL import Image
 import epaper
 import logging
+import RPi.GPIO as GPIO
 
 KNOWN_EPDs = ["epd7in5_V2"]
 
@@ -24,13 +25,17 @@ class display:
         if not self.__type in KNOWN_EPDs:
             raise NotImplementedError("NOT SUPPORTED EPD")
 
+        GPIO.setmode(GPIO.BCM)
+
         self.__epd = epaper.epaper(self.__type).EPD()
         self.__epd.init()
         self.__epd.Clear()
 
-    def __init__(self, type, rot_inv) -> None:
+    def __init__(self, type, w, h, c, rot_inv) -> None:
         self.__type = type
-
+        self.__width = w
+        self.__height = h
+        self.__colors = c
         # init the e-paper display
         self.__initEPD()
 
