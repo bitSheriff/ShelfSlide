@@ -24,10 +24,12 @@ class display:
         if USE_OWN_DRIVER:
             self.__epd = epdDriver.EPD()
         else:
-            self.__epd = epaper.epaper('epd7in5').EPD()
+            self.__epd = epaper.epaper('epd7in5_V2').EPD()
 
         self.__epd.init()
-        self.__epd.Clear()
+
+        if not USE_OWN_DRIVER:
+            self.__epd.Clear()
 
     def __init__(self, type) -> None:
         self.__type = type
@@ -38,7 +40,7 @@ class display:
 
     def __resize_image(self, image):
         image = image.rotate(90)
-        new_size = (640, 384)
+        new_size = (800, 480)
 
         #image.thumbnail(new_size)  # Use Image.ANTIALIAS for high-quality resizing
 
