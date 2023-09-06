@@ -18,12 +18,15 @@ class Book:
     ##
     # @brief Book class string representation
     def __str__(self) -> str:
-        return f"{self.title} by {self.author} ({self.date})"
+        return f"{self.title} by {self.author} ({self.date}) : {self.cover}\n"
     
     ##
     # @brief Set the cover of the book
     def set_cover(self, cover) -> None:
         self.cover = cover
+
+    def get_cover(self) -> str:
+        return self.cover
 
     ##
     # @brief Set the title of the book

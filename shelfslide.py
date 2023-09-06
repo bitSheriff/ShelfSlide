@@ -5,11 +5,13 @@ import requests
 import sys
 import random
 import subprocess
+import RPi.GPIO as GPIO
+import logging
 
 ## own modules
 sys.path.append("..")
 import src.book as book
-import src.display as display
+import src.display as Display
 
 ##
 # @brief Download a cover image from a URL
@@ -69,11 +71,15 @@ def update_bookLibrary(book_dir, is_git):
 ##
 # @brief Main function
 def main():
+    GPIO.setmode(GPIO.BCM)
+    logging.basicConfig(level=logging.DEBUG)
     with open('config.yaml', 'r') as file:
             config_file = yaml.safe_load(file)
 
     books_dir = str(str(config_file['books']['dir']) + "/books.json")
     cover_dir = str(str(config_file['books']['dir']) + "/media")
+
+    display = Display.display("epd7in5")
 
     update_bookLibrary(config_file['books']['dir'], config_file['books']['git'])
 
@@ -86,6 +92,7 @@ def main():
     bk = sort_books(book_list, config_file['slideshow']['mode'])
     print(*book_list)
 
+    display.display_image("books/media/jane-doe_the-magazine.jpeg")
 
 
 ##
