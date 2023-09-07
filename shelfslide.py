@@ -133,11 +133,7 @@ def main():
     # configure the arg parser
     parser = config_args()
 
-    # check if the update flag is set 
-    if parser.update:
-        subprocess.run(["git", "pull"])
-        print("Updated ShelfSlide\n Please restart the application")
-        sys.exit(0)
+
 
     # load the config file
     with open('config.yaml', 'r') as file:
@@ -150,6 +146,15 @@ def main():
                                 config_file['display']['colors'],
                                 config_file['display']['rot_inv'])
     
+
+
+    # check if the update flag is set 
+    if parser.update:
+        subprocess.run(["git", "pull"])
+        print("Updated ShelfSlide\n Please restart the application")
+        display.display_logo()
+        sys.exit(0)
+
     # check if the dryrun flag is set
     if parser.dryrun:
         raise NotImplementedError("Dry run not implemented yet")
