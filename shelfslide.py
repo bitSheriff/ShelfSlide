@@ -124,6 +124,11 @@ def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode, offlineOnly, clea
     book_list = sort_books(book_list, slide_mode)
     return book_list
 
+def error_exit(display, text):
+        logging.error(text)
+        display.display_logo()
+        sys.exit(0)
+
 ##
 # @brief Main function
 def main():
@@ -152,8 +157,7 @@ def main():
     if parser.update:
         subprocess.run(["git", "pull"])
         print("Updated ShelfSlide\n Please restart the application")
-        display.display_logo()
-        sys.exit(0)
+        error_exit(display)
 
     # check if the dryrun flag is set
     if parser.dryrun:
