@@ -77,6 +77,8 @@ def config_args():
     parser.add_argument('--clear',   '-c', action='store_true', help='Just clear the display and exit')
     parser.add_argument('--time',    '-t', default=0,           help='Time between slides in seconds')
     parser.add_argument('--dryrun',  '-d', action='store_true', help='Dry run, test if all given links are valid')
+    parser.add_argument('--update',  '-u', action='store_true', help='Update the application from the git repository')
+
 
     # return the parsed arguments
     return parser.parse_args()
@@ -104,6 +106,12 @@ def main():
 
     # configure the arg parser
     parser = config_args()
+
+    # check if the update flag is set 
+    if parser.update:
+        subprocess.run(["git", "pull"])
+        print("Updated ShelfSlide\n Please restart the application")
+        sys.exit(0)
 
     # load the config file
     with open('config.yaml', 'r') as file:
