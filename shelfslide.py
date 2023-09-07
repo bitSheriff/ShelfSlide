@@ -66,12 +66,19 @@ def load_bookLibrary(file, cover_dir, offlineOnly):
         list.append(bk)
     return list
 
+##
+# @brief Configure the argument parser
 def config_args():
-    parser = argparse.ArgumentParser(description='ShelfSlide')
+    parser = argparse.ArgumentParser(prog='ShelfSlide',
+                                     description='Show your read books on an e-paper display',
+                                     epilog='For more information please visit github.com/bitSheriff/ShelfSlide')
 
     parser.add_argument('--offline', '-o', action='store_true', help='Option to run ShelfSlide offline, without downloading covers')
-    parser.add_argument('--clear', '-c', action='store_true', help='Just clear the display and exit')
+    parser.add_argument('--clear',   '-c', action='store_true', help='Just clear the display and exit')
+    parser.add_argument('--time',    '-t', default=0,           help='Time between slides in seconds')
+    parser.add_argument('--dryrun',  '-d', action='store_true', help='Dry run, test if all given links are valid')
 
+    # return the parsed arguments
     return parser.parse_args()
 
 ##
@@ -109,6 +116,10 @@ def main():
                                 config_file['display']['colors'],
                                 config_file['display']['rot_inv'])
     
+    # check if the dryrun flag is set
+    if parser.dryrun:
+        raise NotImplementedError("Dry run not implemented yet")
+
     # check if the clear flag is set
     if parser.clear:
         # clear the display and exit
@@ -123,6 +134,10 @@ def main():
                                     parser.offline)
 
     slideshow_sleep = min( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
+
+    # override the configured tme if the user specified one (allowed to be less than 5min)
+    if parser.time != 0:
+        slideshow_sleep = parser.time
 
     while True:
         i = 0
