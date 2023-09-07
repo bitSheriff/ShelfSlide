@@ -14,7 +14,7 @@ import argparse
 sys.path.append("..")
 import src.book as book
 import src.display as Display
-
+import src.slideshow as slideshow
 
 SLIDESHOW_MIN_SLEEP = 300 # min 5min sleep
 
@@ -147,12 +147,11 @@ def main():
     if parser.time != 0:
         slideshow_sleep = parser.time
 
+    # init the slideshow
+    slideshow = slideshow.slideshow(slideshow_sleep, book_list, display)
+
     while True:
-        i = 0
-        for i in range(len(book_list)):
-            display.display_image(book_list[i].get_cover())
-            time.sleep(slideshow_sleep)
-            display.display_wakeUp()
+        slideshow.run()
 
 ##
 # @brief Main function
