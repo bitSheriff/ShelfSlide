@@ -1,13 +1,15 @@
-import time
-import display
+import time, sys
+
+sys.path.append("..")
+import src.display
 
 
 class slideshow:
-    __time
-    __book_list
-    __display
-    __timestamp
-    __current_book
+    __time = 0
+    __book_list = None
+    __display = None
+    __timestamp = 0
+    __current_book = 0
 
     def __init__(self, time, book_list, display) -> None:
         self.__time = time
