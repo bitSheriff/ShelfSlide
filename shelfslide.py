@@ -8,7 +8,7 @@ import subprocess
 import logging
 import time
 import argparse
-
+import glob
 
 ## own modules
 sys.path.append("..")
@@ -52,6 +52,16 @@ def sort_books(books, mode):
     return newBk
 
 ##
+# Check if the cover was already downloaded once
+def cover_exists(name, dir):
+    files = glob.glob(dir+name)
+    print(f"{dir}, {name}, {len(files)}")
+    if len(files) == 0:
+        return False
+    else:
+        return True
+
+##
 # @brief Load the book library from a json file
 def load_bookLibrary(file, cover_dir, offlineOnly):
     list = []
@@ -61,7 +71,9 @@ def load_bookLibrary(file, cover_dir, offlineOnly):
 
         # if the book has an online cover, download it, the path needs to be updated
         if (cover['urlType'] == "link") and (not offlineOnly):
-                download_covers(cover['url'], cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
+                # check if the file should be downloaded
+                if not cover_exists(generate_coverfilename(entry['author'], entry['title']), cover_dir + "/cache/"):
+                    download_covers(cover['url'], cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
                 bk.set_cover(cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
         list.append(bk)
     return list
