@@ -84,8 +84,18 @@ def config_args():
     return parser.parse_args()
 
 ##
+# Clean the downloaded covers
+def clean_cache(cover_dir):
+    path = cover_dir + "/cache/"
+    
+    for file in os.listdir(path):
+        file_path = os.path.join(path, file)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+
+##
 # @brief Update the book library from a git repository
-def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode, offlineOnly):
+def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode, offlineOnly, clean):
     if is_git:
         original_directory = os.getcwd()
         os.chdir(book_dir)
@@ -93,6 +103,10 @@ def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode, offlineOnly):
         os.chdir(original_directory) # change back to original directory
     with open(book_dir+"/books.json",'r') as file:
         books_file = json.load(file)
+
+    # check if the old covers should be removed before downloading the new
+    if clean:
+        clean_cache(cover_dir)
 
     book_list = load_bookLibrary(books_file, cover_dir, offlineOnly)
     book_list = sort_books(book_list, slide_mode)
@@ -139,7 +153,8 @@ def main():
                                     str(str(config_file['books']['dir']) + "/media"),
                                     config_file['books']['git'],
                                     config_file['slideshow']['mode'],
-                                    parser.offline)
+                                    parser.offline,
+                                    config_file['books']['clean'],)
 
     slideshow_sleep = min( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
 

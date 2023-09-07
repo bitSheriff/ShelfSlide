@@ -86,6 +86,9 @@ Directory where the `books.json` file is located.
 `books.git`
 If set to `true` the `books.json` file and `media/`will be pulled from the git repository.
 
+`books.clean`
+If set to `true` the downloaded covers will get removed every time at startup.
+
 `slideshow.interval`
 Interval in seconds between the covers.
 
