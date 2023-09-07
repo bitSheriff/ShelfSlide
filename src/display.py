@@ -81,6 +81,10 @@ class display:
             self.__epd.init()
             self.__epd.Clear()
 
+    def display_clear(self) -> None:
+        self.__epd.Clear()
+        self.__epd.sleep()
+
     def refresh(self):
         if self.__image == None:
             return

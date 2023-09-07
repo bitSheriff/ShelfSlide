@@ -7,6 +7,8 @@ import random
 import subprocess
 import logging
 import time
+import argparse
+
 
 ## own modules
 sys.path.append("..")
@@ -51,22 +53,30 @@ def sort_books(books, mode):
 
 ##
 # @brief Load the book library from a json file
-def load_bookLibrary(file, cover_dir):
+def load_bookLibrary(file, cover_dir, offlineOnly):
     list = []
     for entry in file['read']:
         cover = entry['cover']
         bk = book.Book(entry['title'], entry['author'], cover_dir+"/"+cover['url'], entry['date'])
 
         # if the book has an online cover, download it, the path needs to be updated
-        if cover['urlType'] == "link":
+        if (cover['urlType'] == "link") and (not offlineOnly):
                 download_covers(cover['url'], cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
                 bk.set_cover(cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
         list.append(bk)
     return list
 
+def config_args():
+    parser = argparse.ArgumentParser(description='ShelfSlide')
+
+    parser.add_argument('--offline', '-o', action='store_true', help='Option to run ShelfSlide offline, without downloading covers')
+    parser.add_argument('--clear', '-c', action='store_true', help='Just clear the display and exit')
+
+    return parser.parse_args()
+
 ##
 # @brief Update the book library from a git repository
-def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode):
+def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode, offlineOnly):
     if is_git:
         original_directory = os.getcwd()
         os.chdir(book_dir)
@@ -75,7 +85,7 @@ def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode):
     with open(book_dir+"/books.json",'r') as file:
         books_file = json.load(file)
 
-    book_list = load_bookLibrary(books_file, cover_dir)
+    book_list = load_bookLibrary(books_file, cover_dir, offlineOnly)
     book_list = sort_books(book_list, slide_mode)
     return book_list
 
@@ -85,6 +95,10 @@ def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
+    # configure the arg parser
+    parser = config_args()
+
+    # load the config file
     with open('config.yaml', 'r') as file:
             config_file = yaml.safe_load(file)
 
@@ -94,12 +108,19 @@ def main():
                                 config_file['display']['height'],
                                 config_file['display']['colors'],
                                 config_file['display']['rot_inv'])
+    
+    # check if the clear flag is set
+    if parser.clear:
+        # clear the display and exit
+        display.display_clear()
+        sys.exit(0)
 
     # get the books
     book_list = update_bookLibrary( config_file['books']['dir'],
                                     str(str(config_file['books']['dir']) + "/media"),
                                     config_file['books']['git'],
-                                    config_file['slideshow']['mode'])
+                                    config_file['slideshow']['mode'],
+                                    parser.offline)
 
     slideshow_sleep = min( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
 
