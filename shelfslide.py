@@ -12,7 +12,7 @@ import glob
 
 ## own modules
 sys.path.append("..")
-import src.book as book
+import src.book as Book
 import src.display as Display
 import src.slideshow as Slideshow
 
@@ -67,7 +67,7 @@ def load_bookLibrary(file, cover_dir, offlineOnly):
     list = []
     for entry in file['read']:
         cover = entry['cover']
-        bk = book.Book(entry['title'], entry['author'], cover_dir+"/"+cover['url'], entry['date'])
+        bk = Book.Book(entry['title'], entry['author'], cover_dir+"/"+cover['url'], entry['date'])
 
         # if the book has an online cover, download it, the path needs to be updated
         if (cover['urlType'] == "link") and (not offlineOnly):
@@ -105,13 +105,25 @@ def clean_cache(cover_dir):
         if os.path.isfile(file_path):
             os.remove(file_path)
 
+def file_is_media(path):
+    media_extensions = ["jpeg", "jpg", "png"]
+
+    # check if the extension is one of the allowed one
+    for ext in media_extensions:
+        if ext in path:
+            return True
+    # extension not found, so no allowed media file
+    return False
+
+
 def load_simple_bookLibrary(cover_dir):
     book_list = []
 
     for file in os.listdir(cover_dir):
         file_path = os.path.join(cover_dir, file)
-        book = book.Book(title = "", author = "", cover = file_path, date = "")
-        book_list.append(book)
+        if file_is_media(file_path):
+            bk = Book.Book(title = "", author = "", cover = file_path, date = "")
+            book_list.append(bk)
     return book_list
 
 ##
