@@ -9,7 +9,7 @@ class Book:
 
     ##
     # @brief Book class constructor
-    def __init__(self, title, author, cover,date) -> None:
+    def __init__(self, title, author, cover, date) -> None:
         self.title = title
         self.author = author
         self.cover = cover

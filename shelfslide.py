@@ -105,14 +105,27 @@ def clean_cache(cover_dir):
         if os.path.isfile(file_path):
             os.remove(file_path)
 
+def load_simple_bookLibrary(cover_dir):
+    book_list = []
+
+    for file in os.listdir(cover_dir):
+        file_path = os.path.join(cover_dir, file)
+        book = book.Book(title = "", author = "", cover = file_path, date = "")
+        book_list.append(book)
+    return book_list
+
 ##
 # @brief Update the book library from a git repository
-def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode, offlineOnly, clean):
+def update_bookLibrary(book_dir,cover_dir, is_git, slide_mode, offlineOnly, clean, simpleMode):
     if is_git:
         original_directory = os.getcwd()
         os.chdir(book_dir)
         subprocess.run(["git", "pull"])
         os.chdir(original_directory) # change back to original directory
+
+    if simpleMode:
+        return load_simple_bookLibrary(cover_dir)
+
     with open(book_dir+"/books.json",'r') as file:
         books_file = json.load(file)
 
@@ -175,7 +188,8 @@ def main():
                                     config_file['books']['git'],
                                     config_file['slideshow']['mode'],
                                     parser.offline,
-                                    config_file['books']['clean'],)
+                                    config_file['books']['clean'],
+                                    config_file['books']['simpleMode'])
 
     slideshow_sleep = min( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
 
