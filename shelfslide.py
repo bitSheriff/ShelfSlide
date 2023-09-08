@@ -90,6 +90,7 @@ def config_args():
     parser.add_argument('--time',    '-t', default=0,           help='Time between slides in seconds')
     parser.add_argument('--dryrun',  '-d', action='store_true', help='Dry run, test if all given links are valid')
     parser.add_argument('--update',  '-u', action='store_true', help='Update the application from the git repository')
+    parser.add_argument('--verbose', '-v', action='store_true', help='Log all happenings')
 
 
     # return the parsed arguments
@@ -158,12 +159,13 @@ def error_exit(display, text):
 # @brief Main function
 def main():
 
-    logging.basicConfig(level=logging.DEBUG)
-
     # configure the arg parser
     parser = config_args()
 
-
+    if parser.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.CRITICAL)
 
     # load the config file
     with open('config.yaml', 'r') as file:
