@@ -55,7 +55,6 @@ def sort_books(books, mode):
 # Check if the cover was already downloaded once
 def cover_exists(name, dir):
     files = glob.glob(dir+name)
-    print(f"{dir}, {name}, {len(files)}")
     if len(files) == 0:
         return False
     else:
