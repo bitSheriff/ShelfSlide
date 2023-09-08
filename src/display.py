@@ -7,6 +7,7 @@ import logging
 import RPi.GPIO as GPIO
 
 KNOWN_EPDs = ["epd7in5_V2"]
+IMAGE_LIB = "pillow" # "opencv" (not ready for usage) / "pillow"
 
 class display:
 
@@ -60,15 +61,25 @@ class display:
 
         return canvas
 
+    def __convert_colors(self, path):
+
+        if IMAGE_LIB == "opencv":
+            import cv2
+            image = cv2.imread(path)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            return image
+        else:
+            image = Image.open(path)
+            image = image.convert(mode="L")
+            return image
+
+
 
     def display_image(self, path) -> None:
         
-        # open the image
-        self.__image = Image.open(path)
-
         # convert the image to the correct colors
         if self.__colors == "BW":
-            self.__image = self.__image.convert(mode="L")
+            self.__image = self.__convert_colors(path)
 
         self.__image = self.__resize_image(self.__image)
 
