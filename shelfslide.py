@@ -90,7 +90,7 @@ def config_args():
     parser.add_argument('--dryrun',  '-d', action='store_true', help='Dry run, test if all given links are valid')
     parser.add_argument('--update',  '-u', action='store_true', help='Update the application from the git repository')
     parser.add_argument('--verbose', '-v', action='store_true', help='Log all happenings')
-
+    parser.add_argument('--show',    '-s', default="",          help='Show given picture')
 
     # return the parsed arguments
     return parser.parse_args()
@@ -193,6 +193,12 @@ def main():
     if parser.clear:
         # clear the display and exit
         display.display_clear()
+        sys.exit(0)
+    
+    # check if the show flag is set
+    if parser.show != "":
+        # show the given picture
+        display.display_image(parser.show)
         sys.exit(0)
 
     # get the books
