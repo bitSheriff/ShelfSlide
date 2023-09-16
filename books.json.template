@@ -1,0 +1,40 @@
+{
+  "read": [
+    {
+      "title": "The Mysterious Island",
+      "author": "John Doe",
+      "cover": {
+        "url": "https://ideogram.ai/api/images/direct/h1fOVZQ_TKOTP8bZjDOCrw",
+        "urlType": "link"
+      },
+      "date": "2021-01-01"
+    },
+    {
+      "title": "Ted Bundy",
+      "author": "Jane Doe",
+      "cover": {
+        "url": "ideogram_1.jpeg",
+        "urlType": "local"
+      },
+      "date": "2020-01-02"
+    },
+    {
+      "title": "Brainwashing",
+      "author": "Jane Doe",
+      "cover": {
+        "url": "ideogram_2.jpeg",
+        "urlType": "local"
+      },
+      "date": "2022-01-16"
+    },
+    {
+      "title": "Woah, slow down!",
+      "author": "Jane Doe",
+      "cover": {
+        "url": "ideogram_3.jpeg",
+        "urlType": "local"
+      },
+      "date": "2021-10-25"
+    }
+  ]
+}
