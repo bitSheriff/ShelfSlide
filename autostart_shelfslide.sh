@@ -15,6 +15,12 @@ if systemctl is-active --quiet ${SERVICE_NAME}.service; then
   exit 1
 fi
 
+# Vcreate config folder structure if it doesn't exist
+CONFIG_DIR="$HOME/.config/systemd/user"
+if [ ! -d "$CONFIG_DIR" ]; then
+  mkdir -p "$CONFIG_DIR"
+fi
+
 # Create the unit file
 cat <<EOF > ~/.config/systemd/user/${SERVICE_NAME}.service
 [Unit]
