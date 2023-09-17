@@ -16,7 +16,7 @@ if systemctl is-active --quiet ${SERVICE_NAME}.service; then
 fi
 
 # Create the unit file
-cat <<EOF > /etc/systemd/system/${SERVICE_NAME}.service
+cat <<EOF > ~/.config/systemd/user/${SERVICE_NAME}.service
 [Unit]
 Description=ShelfSlide Python Program
 After=network.target
