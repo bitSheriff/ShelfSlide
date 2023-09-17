@@ -1,11 +1,11 @@
 # .github/workflows/main.yml
 
-name: Run pytest on push
+name: Run pytest
 
 on:
   push:
     branches:
-      - main
+      -  # run on all branches
 
 jobs:
   test:
