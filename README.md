@@ -121,6 +121,20 @@ python shelfslide.py
 
 #### Adding books
 
+##### Simple Mode
+
+If you set the `books.simpleMode` to `True`, then you can simply add books by storing the cover in the `books/media` folder. Now all the images in there will be displayed.
+
+##### Extended Mode
+
+For a more detailed and advanced mode, you can add books (and metadata) to the `books.json`.
+In there you have to ways to add a cover:
+
+1. add a URL of an image, which will later get downloaded
+2. add a path to the image in the `media/` folder
+
+With this method you have the ability to add a _read date_ which can be used for filtering (_only show books read this year_) and sorting.
+
 ## Contributing
 
 We welcome contributions from the community to improve ShelfSlide. If you'd like to contribute, please follow these guidelines:
