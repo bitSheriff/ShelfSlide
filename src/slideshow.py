@@ -16,8 +16,8 @@ class slideshow:
     interrupt_update = False
     __last_update = 0
 
-    def __init__(self, time, book_list, display) -> None:
-        self.__time = time
+    def __init__(self, period, book_list, display) -> None:
+        self.__time = period
         self.__book_list = book_list
         self.__display = display
         self.__last_update = time.time()
