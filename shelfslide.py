@@ -165,7 +165,7 @@ def logging_config(verbose):
     # set the logging to a file
     logging.basicConfig(filename='shelfslide.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
-    
+
 ##
 # @brief Main function
 def main():
@@ -233,6 +233,21 @@ def main():
     while True:
         # run the slideshow
         slideshow.run()
+
+        # check if an update is needed
+        if slideshow.interrupt_update:
+                
+                # update the book list
+                book_list = update_bookLibrary( config_file['books']['dir'],
+                                    str(str(config_file['books']['dir']) + "/media"),
+                                    config_file['books']['git'],
+                                    config_file['slideshow']['mode'],
+                                    parser.offline,
+                                    config_file['books']['clean'],
+                                    config_file['books']['simpleMode'])
+
+                # update the slideshow with the new book list
+                slideshow.update_done(book_list)
 
 ##
 # @brief Main function
