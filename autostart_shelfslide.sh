@@ -9,6 +9,12 @@ SERVICE_NAME="shelfslide"
 # Get the username of the person running the script
 CURRENT_USER="$USER"
 
+# Check if the service already exists
+if systemctl is-active --quiet ${SERVICE_NAME}.service; then
+  echo "The service ${SERVICE_NAME} already exists."
+  exit 1
+fi
+
 # Create the unit file
 cat <<EOF > /etc/systemd/system/${SERVICE_NAME}.service
 [Unit]
