@@ -154,6 +154,18 @@ def error_exit(display, text):
         display.display_logo()
         sys.exit(0)
 
+def logging_config(verbose):
+
+    # set the logging to the console
+    if verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.CRITICAL)
+
+    # set the logging to a file
+    logging.basicConfig(filename='shelfslide.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+
+    
 ##
 # @brief Main function
 def main():
@@ -161,10 +173,8 @@ def main():
     # configure the arg parser
     parser = config_args()
 
-    if parser.verbose:
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.CRITICAL)
+    # configure the logging
+    logging_config(parser.verbose)
 
     # load the config file
     with open('config.yaml', 'r') as file:
