@@ -20,6 +20,7 @@ class slideshow:
         self.__time = time
         self.__book_list = book_list
         self.__display = display
+        self.__last_update = time.time()
         pass
 
     def run(self) -> None:
