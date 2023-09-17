@@ -1,7 +1,10 @@
+# import the test framework
+import pytest
+from unittest.mock import MagicMock
 
+# import the code to be tested
 import sys
 sys.path.append("..")
-#from shelfslide import *
 import shelfslide
 
 def test_load_simple_bookLibrary():

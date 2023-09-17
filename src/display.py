@@ -1,10 +1,16 @@
 
-import os
-import sys
+import os, sys, platform
 from PIL import Image
 import epaper
 import logging
-import RPi.GPIO as GPIO
+
+
+if platform.machine() == "x86_64": # Dev machine, use stub
+    import gpiozero
+    from gpiozero.pins.mock import MockFactory
+    gpiozero.Device.pin_factory = MockFactory()
+else: # Raspberry Pi
+    import RPi.GPIO as GPIO
 
 KNOWN_EPDs = ["epd7in5_V2"]
 IMAGE_LIB = "pillow" # "opencv" (not ready for usage) / "pillow"
