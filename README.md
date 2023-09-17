@@ -13,6 +13,11 @@ ShelfSlide is an open-source project that turns your Raspberry Pi and E-Ink disp
 
 I am hugh bookworm and love to read on my eReaders. The one thing I miss is the kind of private library which builds up year after year. The book covers are a great way to remember the books you've read and to show them to others. So I thought why not build a digital bookshelf which can be used to display the book covers of my eBooks.
 
+<img src="./doc/irl_demo_0.jpg"
+     alt="Real life demo"
+     width="750"
+/>
+
 ### Isn't there such a thing?
 
 Well, yes and no.
@@ -28,7 +33,7 @@ There is a very awesome project called [Openframe](https://openframe.io/), which
 - Perfect for creating a digital library or showcasing your literary collection.
 
 > :warning: **Copyright Infringement Risk** Important Notice for Users :warning:
-> 
+>
 > Using the online functions provided in this software that allow you to download content from external links may pose a significant risk of copyright infringement. It is essential to be aware of and respect copyright laws and regulations before utilizing this feature.
 > <underline> Please check the right before using this feature.</underline>
 
