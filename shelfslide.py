@@ -15,6 +15,7 @@ sys.path.append("..")
 import src.book as Book
 import src.display as Display
 import src.slideshow as Slideshow
+import src.config as Config
 
 SLIDESHOW_MIN_SLEEP = 300 # min 5min sleep
 
@@ -93,6 +94,9 @@ def config_args():
     parser.add_argument('--show',    '-s', default="",          help='Show given picture')
     parser.add_argument('--logo',    '-l', action='store_true', help='Just show the logo and exit')
 
+    parser.add_argument('--copy-conf',     action='store_true', help='Copy the configuration and books to the user config directory')
+
+
 
     # return the parsed arguments
     return parser.parse_args()
@@ -167,6 +171,17 @@ def logging_config(verbose):
     # set the logging to a file
     logging.basicConfig(filename='shelfslide.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
+def load_config_file():
+
+    # check if the file exists in the user config directory
+    if os.path.exists(os.path.expanduser('~') + '/.config/shelfslide/config.yaml'):
+        with open(os.path.expanduser('~') + '/.config/shelfslide/config.yaml', 'r') as file:
+            config_file = yaml.safe_load(file)
+    else:
+        # load the config file from the application directory
+        with open('config.yaml', 'r') as file:
+                config_file = yaml.safe_load(file)
+        return config_file
 
 ##
 # @brief Main function
@@ -178,9 +193,15 @@ def main():
     # configure the logging
     logging_config(parser.verbose)
 
-    # load the config file
-    with open('config.yaml', 'r') as file:
-            config_file = yaml.safe_load(file)
+    # check if the copy-conf flag is set
+    if parser.copy_conf:
+        # copy the configuration file and the books directory to the user's home directory
+        Config.copy_conf()
+        Config.copy_books_dir()
+        sys.exit(0)
+
+    # load the configuration file
+    config_file = load_config_file()
 
     # configure the display
     display = Display.display(  config_file['display']['type'],
