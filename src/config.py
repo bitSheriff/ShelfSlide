@@ -8,8 +8,8 @@ def copy_conf():
     import shutil
     from . import __file__ as root
 
-    root = os.path.dirname(root)
-    conf = os.path.join(root, 'config.yaml')
+    root = os.path.dirname(os.path.abspath(__file__))
+    conf = os.path.join(root, '..', 'config.yaml')
     home = os.path.expanduser('~')
     dest = os.path.join(home, '.config', 'shelfslide', 'config.yaml')
 
@@ -27,8 +27,8 @@ def copy_books_dir():
     import shutil
     from . import __file__ as root
 
-    root = os.path.dirname(root)
-    books = os.path.join(root, 'books')
+    root = os.path.dirname(os.path.abspath(__file__))
+    books = os.path.join(root, '..', 'books')
     home = os.path.expanduser('~')
     dest = os.path.join(home, '.config', 'shelfslide', 'books')
 
