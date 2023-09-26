@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Path to the Python program
-PROGRAM_PATH="$HOME/ShelfSlide/shelfslide.py"
+PROGRAM_PATH="$(readlink -f ".")/shelfslide.py"
+echo $PROGRAM_PATH
+exit 1
 
 # Name of the systemd service
 SERVICE_NAME="shelfslide"
