@@ -20,6 +20,13 @@ fi
 # Check if the script is executed with root privileges
 if [ "$EUID" -ne 0 ]; then
     echo "This script requires root privileges. Please run it as root."
+
+    # just reload systemd
+    systemctl daemon-reload
+
+    # Enable and start the service
+    systemctl enable ${SERVICE_NAME}.service
+    systemctl start ${SERVICE_NAME}.service
     exit 1
 fi
 
