@@ -93,7 +93,7 @@ def config_args():
     parser.add_argument('--verbose', '-v', action='store_true', help='Log all happenings')
     parser.add_argument('--show',    '-s', default="",          help='Show given picture')
     parser.add_argument('--logo',    '-l', action='store_true', help='Just show the logo and exit')
-
+    parser.add_argument('--force',   '-f', action='store_true', help='Force Flag')
     parser.add_argument('--copy-conf',     action='store_true', help='Copy the configuration and books to the user config directory')
 
 
