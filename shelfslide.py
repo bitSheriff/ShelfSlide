@@ -177,11 +177,13 @@ def load_config_file():
     if os.path.exists(os.path.expanduser('~') + '/.config/shelfslide/config.yaml'):
         with open(os.path.expanduser('~') + '/.config/shelfslide/config.yaml', 'r') as file:
             config_file = yaml.safe_load(file)
+            logging.info("Loaded config file from user config directory")
     else:
         # load the config file from the application directory
         with open('config.yaml', 'r') as file:
-                config_file = yaml.safe_load(file)
-        return config_file
+            config_file = yaml.safe_load(file)
+            logging.info("Loaded config file from application directory")
+    return config_file
 
 ##
 # @brief Main function
