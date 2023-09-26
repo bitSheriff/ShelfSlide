@@ -177,13 +177,15 @@ def load_config_file():
     if os.path.exists(os.path.expanduser('~') + '/.config/shelfslide/config.yaml'):
         with open(os.path.expanduser('~') + '/.config/shelfslide/config.yaml', 'r') as file:
             config_file = yaml.safe_load(file)
+            config_dir = os.path.expanduser('~') + "/.config/shelfslide/"
             logging.info("Loaded config file from user config directory")
     else:
         # load the config file from the application directory
         with open('config.yaml', 'r') as file:
             config_file = yaml.safe_load(file)
+            config_dir = os.path.dirname(os.path.abspath(__file__))
             logging.info("Loaded config file from application directory")
-    return config_file
+    return (config_file, config_dir)
 
 ##
 # @brief Main function
@@ -203,7 +205,7 @@ def main():
         sys.exit(0)
 
     # load the configuration file
-    config_file = load_config_file()
+    (config_file, config_dir) = load_config_file()
 
     # configure the display
     display = Display.display(  config_file['display']['type'],
@@ -243,7 +245,7 @@ def main():
         sys.exit(0)
 
     # get the books
-    book_list = update_bookLibrary( config_file['books']['dir'],
+    book_list = update_bookLibrary( config_dir + config_file['books']['dir'],
                                     str(str(config_file['books']['dir']) + "/media"),
                                     config_file['books']['git'],
                                     config_file['slideshow']['mode'],
