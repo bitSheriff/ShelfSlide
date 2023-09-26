@@ -15,25 +15,22 @@ if systemctl is-active --quiet ${SERVICE_NAME}.service; then
   exit 1
 fi
 
-# Vcreate config folder structure if it doesn't exist
-CONFIG_DIR="$HOME/.config/systemd/user"
-if [ ! -d "$CONFIG_DIR" ]; then
-  mkdir -p "$CONFIG_DIR"
+# Check if the script is executed with root privileges
+if [ "$EUID" -ne 0 ]; then
+    echo "This script requires root privileges. Please run it as root."
+    exit 1
 fi
 
 # Create the unit file
-cat <<EOF > ~/.config/systemd/user/${SERVICE_NAME}.service
+cat <<EOF > /etc/systemd/system/${SERVICE_NAME}.service
 [Unit]
 Description=ShelfSlide Python Program
-After=network.target
 
 [Service]
 ExecStart=/usr/bin/python3 ${PROGRAM_PATH}
 WorkingDirectory=$HOME/ShelfSlide
-StandardOutput=inherit
-StandardError=inherit
-Restart=always
 User=$CURRENT_USER
+Group=$CURRENT_USER
 
 [Install]
 WantedBy=multi-user.target
@@ -43,8 +40,8 @@ EOF
 systemctl daemon-reload
 
 # Enable and start the service
-systemctl enable ${SERVICE_NAME}
-systemctl start ${SERVICE_NAME}
+systemctl enable ${SERVICE_NAME}.service
+systemctl start ${SERVICE_NAME}.service
 
 # Display the status of the service
-systemctl status ${SERVICE_NAME}
+systemctl status ${SERVICE_NAME}.service
