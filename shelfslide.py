@@ -195,7 +195,7 @@ def main():
     if parser.update:
         subprocess.run(["git", "pull"])
         print("Updated ShelfSlide\n Please restart the application")
-        error_exit(display)
+        error_exit(display, "")
 
     # check if the dryrun flag is set
     if parser.dryrun:
