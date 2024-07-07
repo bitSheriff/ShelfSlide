@@ -1,4 +1,4 @@
-certifi==2023.7.22
+certifi>=2024.07.04
 charset-normalizer==3.2.0
 colorzero==2.0
 gpiozero==1.6.2
