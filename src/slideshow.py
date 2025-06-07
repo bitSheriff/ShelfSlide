@@ -25,15 +25,9 @@ class slideshow:
 
     def run(self) -> None:
 
-        # check if it is time for the next book
-        if ((time.time() - self.__timestamp) > self.__time):
-            # update the timestamp and the current book
-            self.__timestamp = time.time()
-            self.__current_book = (self.__current_book + 1) % len(self.__book_list)
-            
-            # display the next book
-            self.__display.display_wakeUp()
-            self.__display.display_image(self.__book_list[self.__current_book].get_cover())
+        # display the next book
+        self.__display.display_wakeUp()
+        self.__display.display_image(self.__book_list[self.__current_book].get_cover())
 
         # check if the update interval has passed
         if ((time.time() - self.__last_update) > UPDATE_INTERVAL):

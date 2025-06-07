@@ -27,7 +27,7 @@ def download_covers(url, path):
         with open(path, 'wb') as file:
             file.write(response.content)
     except requests.exceptions.RequestException as e:
-        logging.error(f"Failed to download image: {e}")
+        logging.error("Failed to download image")
 
 ##
 # @brief Generate a cover filename from the author and title
@@ -241,6 +241,9 @@ def main():
     while True:
         # run the slideshow
         slideshow.run()
+
+        # halt the application, save battery
+        time.sleep(slideshow_sleep)
 
         # check if an update is needed
         if slideshow.interrupt_update:
