@@ -126,6 +126,8 @@ def load_simple_bookLibrary(cover_dir):
         if file_is_media(file_path):
             bk = Book.Book(title = "", author = "", cover = file_path, date = "")
             book_list.append(bk)
+
+    random.shuffle(book_list)
     return book_list
 
 ##
