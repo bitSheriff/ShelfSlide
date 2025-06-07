@@ -28,6 +28,7 @@ class slideshow:
         # display the next book
         self.__display.display_wakeUp()
         self.__display.display_image(self.__book_list[self.__current_book].get_cover())
+        self.__current_book = (self.__current_book + 1) % len(self.__book_list)
 
         # check if the update interval has passed
         if ((time.time() - self.__last_update) > UPDATE_INTERVAL):
