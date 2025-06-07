@@ -230,7 +230,7 @@ def main():
                                     config_file['books']['clean'],
                                     config_file['books']['simpleMode'])
 
-    slideshow_sleep = min( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
+    slideshow_sleep = max( config_file['slideshow']['interval'], SLIDESHOW_MIN_SLEEP)
 
     # override the configured tme if the user specified one (allowed to be less than 5min)
     if parser.time != 0:
