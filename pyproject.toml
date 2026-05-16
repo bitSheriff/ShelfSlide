@@ -1,0 +1,25 @@
+[project]
+name = "shelfslide"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "certifi>=2026.4.22",
+    "charset-normalizer>=3.4.7",
+    "colorzero>=2.0",
+    "gpiozero>=2.0.1",
+    "idna>=3.15",
+    "iniconfig>=2.3.0",
+    "packaging>=26.2",
+    "pillow>=12.2.0",
+    "pluggy>=1.6.0",
+    "pytest>=9.0.3",
+    "pytest-mock>=3.15.1",
+    "pyyaml>=6.0.3",
+    "requests>=2.34.2",
+    "rpi-gpio",
+    "spidev>=3.8",
+    "urllib3>=2.7.0",
+    "waveshare-epaper",
+]
