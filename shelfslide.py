@@ -20,14 +20,17 @@ SLIDESHOW_MIN_SLEEP = 300 # min 5min sleep
 
 ##
 # @brief Download a cover image from a URL
+# @return True on success, False otherwise
 def download_covers(url, path):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check for any HTTP errors
         with open(path, 'wb') as file:
             file.write(response.content)
+        return True
     except requests.exceptions.RequestException as e:
-        logging.error("Failed to download image")
+        logging.error(f"Failed to download image from {url}: {e}")
+        return False
 
 ##
 # @brief Generate a cover filename from the author and title
@@ -62,18 +65,28 @@ def cover_exists(name, dir):
 
 ##
 # @brief Load the book library from a json file
+# @note Books whose cover cannot be resolved (missing local file, failed
+#       download) are skipped instead of being added with a broken path,
+#       which would otherwise crash the slideshow later on.
 def load_bookLibrary(file, cover_dir, offlineOnly):
     list = []
     for entry in file['read']:
         cover = entry['cover']
         bk = Book.Book(entry['title'], entry['author'], cover_dir+"/"+cover['url'], entry['date'])
 
-        # if the book has an online cover, download it, the path needs to be updated
         if (cover['urlType'] == "link") and (not offlineOnly):
-                # check if the file should be downloaded
-                if not cover_exists(generate_coverfilename(entry['author'], entry['title']), cover_dir + "/cache/"):
-                    download_covers(cover['url'], cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
-                bk.set_cover(cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title']))
+            cover_path = cover_dir + "/cache/" + generate_coverfilename(entry['author'], entry['title'])
+            if cover_exists(generate_coverfilename(entry['author'], entry['title']), cover_dir + "/cache/"):
+                bk.set_cover(cover_path)
+            elif download_covers(cover['url'], cover_path):
+                bk.set_cover(cover_path)
+            else:
+                logging.warning(f"Skipping '{entry['title']}' - cover download failed")
+                continue
+        elif cover['urlType'] == "local" and not os.path.isfile(bk.get_cover()):
+            logging.warning(f"Skipping '{entry['title']}' - local cover not found: {bk.get_cover()}")
+            continue
+
         list.append(bk)
     return list
 
@@ -86,7 +99,7 @@ def config_args():
 
     parser.add_argument('--offline', '-o', action='store_true', help='Option to run ShelfSlide offline, without downloading covers')
     parser.add_argument('--clear',   '-c', action='store_true', help='Just clear the display and exit')
-    parser.add_argument('--time',    '-t', default=0,           help='Time between slides in seconds')
+    parser.add_argument('--time',    '-t', default=0, type=int,  help='Time between slides in seconds')
     parser.add_argument('--dryrun',  '-d', action='store_true', help='Dry run, test if all given links are valid')
     parser.add_argument('--update',  '-u', action='store_true', help='Update the application from the git repository')
     parser.add_argument('--verbose', '-v', action='store_true', help='Log all happenings')
@@ -108,14 +121,12 @@ def clean_cache(cover_dir):
             os.remove(file_path)
 
 def file_is_media(path):
-    media_extensions = ["jpeg", "jpg", "png"]
+    media_extensions = (".jpeg", ".jpg", ".png")
 
-    # check if the extension is one of the allowed one
-    for ext in media_extensions:
-        if ext in path:
-            return True
-    # extension not found, so no allowed media file
-    return False
+    if not os.path.isfile(path):
+        return False
+
+    return path.lower().endswith(media_extensions)
 
 
 def load_simple_bookLibrary(cover_dir):

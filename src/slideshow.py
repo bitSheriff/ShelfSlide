@@ -1,4 +1,4 @@
-import time, sys
+import time, sys, logging
 
 sys.path.append("..")
 import src.display
@@ -25,10 +25,21 @@ class slideshow:
 
     def run(self) -> None:
 
-        # display the next book
-        self.__display.display_wakeUp()
-        self.__display.display_image(self.__book_list[self.__current_book].get_cover())
-        self.__current_book = (self.__current_book + 1) % len(self.__book_list)
+        if not self.__book_list:
+            logging.error("Book list is empty, nothing to display")
+        else:
+            book = self.__book_list[self.__current_book]
+            try:
+                # display the next book
+                self.__display.display_wakeUp()
+                self.__display.display_image(book.get_cover())
+            except Exception as e:
+                # don't let a single bad cover / transient hardware glitch
+                # kill the slideshow and freeze the display forever
+                logging.error(f"Failed to display '{book.get_cover()}': {e}")
+
+            # advance regardless of success, so a broken cover doesn't get retried forever
+            self.__current_book = (self.__current_book + 1) % len(self.__book_list)
 
         # check if the update interval has passed
         if ((time.time() - self.__last_update) > UPDATE_INTERVAL):
