@@ -81,6 +81,18 @@ Follow these simple steps to set up your ShelfSlide digital bookshelf:
    pip install -r requirements.txt
    ```
 
+### Development
+
+For a reproducible dev environment (not needed on the Pi itself), this repo ships a `flake.nix` devShell providing `uv` and Python 3.12:
+
+```shell
+nix develop
+uv sync
+uv run shelfslide.py
+```
+
+With [direnv](https://direnv.net/) installed, `direnv allow` loads the shell automatically on `cd`.
+
 ### Configuration
 
 The configuration is done with the file `config.yaml`.
