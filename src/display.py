@@ -104,8 +104,3 @@ class display:
 
     def display_logo(self) -> None:
         self.display_image("doc/logo.jpeg")
-
-    def refresh(self):
-        if self.__image == None:
-            return
-        
