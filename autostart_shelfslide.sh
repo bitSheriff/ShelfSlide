@@ -2,8 +2,6 @@
 
 # Path to the Python program
 PROGRAM_PATH="$(readlink -f ".")/shelfslide.py"
-echo $PROGRAM_PATH
-exit 1
 
 # Name of the systemd service
 SERVICE_NAME="shelfslide"
@@ -33,6 +31,8 @@ ExecStart=/usr/bin/python3 ${PROGRAM_PATH}
 WorkingDirectory=$HOME/ShelfSlide
 User=$CURRENT_USER
 Group=$CURRENT_USER
+Restart=on-failure
+RestartSec=30
 
 [Install]
 WantedBy=multi-user.target
