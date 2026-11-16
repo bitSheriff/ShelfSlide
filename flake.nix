@@ -1,5 +1,5 @@
 {
-  description = "ShelfSlide dev environment";
+  description = "ShelfSlide - turn a Raspberry Pi + e-ink display into a digital bookshelf";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -7,10 +7,19 @@
     let
       systems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
+      pkgsFor = system: nixpkgs.legacyPackages.${system};
     in
     {
+      apps = forAllSystems (system:
+        import ./.nix/apps.nix {
+          pkgs = pkgsFor system;
+          pythonEnv = import ./.nix/python-env.nix { pkgs = pkgsFor system; };
+          src = self;
+        }
+      );
+
       devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
+        let pkgs = pkgsFor system;
         in {
           default = pkgs.mkShell {
             packages = with pkgs; [

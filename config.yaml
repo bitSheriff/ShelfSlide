@@ -12,6 +12,7 @@ slideshow:
   interval: 600 # interval between slides in s
   mode: "asc" # rand, asc (date), desc (date)
 display:
+  driver: "auto" # auto, waveshare, mock (mock does no hardware I/O, useful off-Pi)
   com: "spi" # spi (e-ink), hdmi (every other monitor)
   width: 800 # pixels
   height: 480 # pixels

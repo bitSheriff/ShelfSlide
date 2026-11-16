@@ -196,11 +196,12 @@ def main():
             config_file = yaml.safe_load(file)
 
     # configure the display
-    display = Display.display(  config_file['display']['type'],
+    display = Display.create_display(config_file['display']['type'],
                                 config_file['display']['width'],
                                 config_file['display']['height'],
                                 config_file['display']['colors'],
-                                config_file['display']['rot_inv'])
+                                config_file['display']['rot_inv'],
+                                config_file['display'].get('driver', 'auto'))
     
 
 
